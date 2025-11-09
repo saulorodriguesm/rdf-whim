@@ -1,0 +1,100 @@
+// back/prisma/schema.prisma
+
+// --- CONFIGURAÇÃO ---
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// --- 1. MODELOS DE CADASTRO DA PACIENTE ---
+model Paciente {
+  // Dados de Login e Identificação
+  id               Int                @id @default(autoincrement())
+  email            String             @unique
+  senhaHash        String             // Senha criptografada (bcrypt)
+  nomeCompleto     String
+  telefone         String?            // O '?' indica que o campo é opcional
+  dataNascimento   DateTime           @db.Date
+  sexo             String
+  alturaCm         Decimal            @db.Decimal(5, 2)
+  dataCadastro     DateTime           @default(now())
+
+  // Relacionamentos:
+  historicoPeso         HistoricoPeso[]
+  questionariosConcluidos QuestionarioConcluido[]
+}
+
+model HistoricoPeso {
+  // Histórico de Peso (Evolução)
+  id             Int      @id @default(autoincrement())
+  pesoKg         Decimal  @db.Decimal(5, 2)
+  dataRegistro   DateTime @default(now()) @db.Date
+
+  // Chave Estrangeira:
+  pacienteId     Int
+  paciente       Paciente @relation(fields: [pacienteId], references: [id])
+
+  // Chave Composta para garantir que não haja dois registros no mesmo dia (opcional)
+  @@unique([pacienteId, dataRegistro]) 
+}
+
+// --- 2. MODELOS DE ESTRUTURA DO QUESTIONÁRIO ---
+model Pilar {
+  // Pilares do WHIM
+  id               Int       @id @default(autoincrement())
+  nomePilar        String    @unique // Ex: 'Nutrição'
+  pontuacaoMaxima  Int       // Ex: 24, 9, 15...
+
+  // Relacionamentos:
+  perguntas      Pergunta[]
+  pontuacoes     PontuacaoPorPilar[]
+}
+
+model Pergunta {
+  // Detalhes das Perguntas
+  id               Int        @id @default(autoincrement())
+  textoPergunta    String     @db.Text
+  ordem            Int
+  ehInvertida      Boolean    @default(false)
+
+  // Chave Estrangeira:
+  pilarId          Int
+  pilar            Pilar      @relation(fields: [pilarId], references: [id])
+}
+
+// --- 3. MODELOS DE RESPOSTAS E RESULTADOS (HISTÓRICO) ---
+model QuestionarioConcluido {
+  // Resultado Agregado Mensal
+  id                 Int      @id @default(autoincrement())
+  dataConclusao      DateTime @default(now())
+  pontuacaoTotal     Int
+  percentualGlobal   Decimal  @db.Decimal(5, 2)
+  classificacao      String   // Ex: 'VITALIDADE PLENA'
+
+  // Chave Estrangeira:
+  pacienteId         Int
+  paciente           Paciente @relation(fields: [pacienteId], references: [id])
+
+  // Relacionamentos:
+  pontuacoesPilares  PontuacaoPorPilar[]
+
+  // Garante que o usuário só possa enviar um questionário por mês (aproximadamente)
+  @@unique([pacienteId, dataConclusao], name: "unique_monthly_submission")
+}
+
+model PontuacaoPorPilar {
+  // Detalhe da Pontuação (para o gráfico em flor)
+  id                        Int @id @default(autoincrement())
+  pontuacaoObtida           Int
+
+  // Chaves Estrangeiras:
+  questionarioConcluidoId   Int
+  questionarioConcluido     QuestionarioConcluido @relation(fields: [questionarioConcluidoId], references: [id])
+  
+  pilarId                   Int
+  pilar                     Pilar                 @relation(fields: [pilarId], references: [id])
+}

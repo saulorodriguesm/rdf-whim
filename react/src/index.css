@@ -1,0 +1,38 @@
+:root {
+  --primary: #94223e;
+  --secondary: #94193d;
+  --white: #fff;
+  --dark: #333;
+  --light-bg: #fff7f9;
+  --accent-light: #ffeaf0;
+  --font-headline: "Poppins", sans-serif;
+  --font-special: "Special Gothic Expanded One", sans-serif;
+  --shadow-base: 0 10px 30px rgba(0, 0, 0, 0.15);
+  --shadow-cta: 0 5px 15px rgba(248, 169, 180, 0.4);
+}
+#root {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: var(--font-headline);
+  color: var(--dark);
+  background: radial-gradient(
+      circle at top left,
+      #ffdde5 0%,
+      #ffc4d2 25%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      #f9a3b7 0%,
+      #94223e 40%,
+      #94193d 70%
+    );
+  background-color: var(--light-bg);
+  background-attachment: fixed;
+}
