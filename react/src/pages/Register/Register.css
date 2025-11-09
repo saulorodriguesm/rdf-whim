@@ -1,0 +1,35 @@
+.register-form-container {
+  padding: 20px;
+  width: 100%;
+}
+
+.input-group-row {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.input-field-half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-label {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+@media (max-width: 600px) {
+  .register-container {
+    max-width: 100%;
+    padding: 10px;
+    margin: 20px auto;
+  }
+  .input-group-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

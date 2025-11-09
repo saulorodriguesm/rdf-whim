@@ -23,15 +23,17 @@ body {
   color: var(--dark);
   background: radial-gradient(
       circle at top left,
-      #ffdde5 0%,
-      #ffc4d2 25%,
-      transparent 60%
+      #ffb3c1 0%,
+      #f28ba3 30%,
+      #e35d79 60%,
+      transparent 90%
     ),
     radial-gradient(
       circle at bottom right,
-      #f9a3b7 0%,
-      #94223e 40%,
-      #94193d 70%
+      #c3475d 0%,
+      #a12b43 40%,
+      #94193d 75%,
+      #6c102b 100%
     );
   background-color: var(--light-bg);
   background-attachment: fixed;

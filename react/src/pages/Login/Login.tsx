@@ -5,10 +5,10 @@ import "./Login.css";
 import api from "../../api";
 
 const LoginPage = () => {
-  const [mail, setMail] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleCreateAccount = () => {
@@ -16,36 +16,40 @@ const LoginPage = () => {
   };
 
   const handleLogin = useCallback(
-    async (e) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
       setError(null);
       setLoading(true);
       try {
-        const response = await api.post("/auth/login", { mail, password });
+        const response = await api.post("/auth/login", {
+          email,
+          senha: password,
+        });
+
         const { token, paciente } = response.data;
         localStorage.setItem("token", token);
         localStorage.setItem("pacienteData", JSON.stringify(paciente));
         alert(`Bem-vinda, ${paciente.nome}! Login realizado com sucesso.`);
-        console.log("Login OK. Redirecionando...");
-      } catch (err) {
+        navigate("/dashboard");
+      } catch (err: any) {
         const errorMessage =
           err.response?.data?.error || "Falha na conexão ou erro desconhecido.";
         setError(errorMessage);
-        console.error("Erro de Login:", errorMessage);
+        console.error("Login Error:", errorMessage);
       } finally {
         setLoading(false);
       }
     },
-    [mail, password]
+    [email, password, navigate]
   );
 
   return (
     <div className="login-container">
-      <img className="whim-logo" src="../../assets/logo.png" />
+      <img className="whim-logo" src="../../assets/logo.png" alt="WHIM Logo" />
       <div className="login-image-wrapper">
         <img
           src="../../assets/whim-art-1.png"
-          alt="Ritual de Florescimento Logo"
+          alt="Ritual de Florescimento Art"
           className="login-container-image"
         />
       </div>
@@ -57,8 +61,8 @@ const LoginPage = () => {
           <input
             type="email"
             placeholder="Digite seu email"
-            value={mail}
-            onChange={(e) => setMail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             className="login-input"
           />
