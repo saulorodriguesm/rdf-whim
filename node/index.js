@@ -3,12 +3,14 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import cors from 'cors';
 
 const prisma = new PrismaClient();
 const app = express();
 const PORT = 3001;
 
 app.use(express.json());
+app.use(cors({ origin: 'http://localhost:5173' }))
 
 app.get("/", (req, res) => {
   res.send("API WHIM está rodando!");

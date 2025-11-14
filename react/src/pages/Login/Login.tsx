@@ -29,8 +29,8 @@ const LoginPage = () => {
         const { token, paciente } = response.data;
         localStorage.setItem("token", token);
         localStorage.setItem("pacienteData", JSON.stringify(paciente));
-        alert(`Bem-vinda, ${paciente.nome}! Login realizado com sucesso.`);
-        navigate("/dashboard");
+        alert(`Bem-vindo(a), ${paciente.nome}! Login realizado com sucesso.`);
+        navigate("/questionario");
       } catch (err: any) {
         const errorMessage =
           err.response?.data?.error || "Falha na conexão ou erro desconhecido.";
@@ -45,7 +45,6 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <img className="whim-logo" src="../../assets/logo.png" alt="WHIM Logo" />
       <div className="login-image-wrapper">
         <img
           src="../../assets/whim-art-1.png"

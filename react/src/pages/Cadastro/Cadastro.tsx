@@ -80,7 +80,6 @@ const RegisterPage = () => {
 
   return (
     <div className="login-container register-container">
-      <img className="whim-logo" src="../../assets/logo.png" alt="WHIM Logo" />
       <div className="login-image-wrapper">
         <img
           src="../../assets/whim-art-1.png"
