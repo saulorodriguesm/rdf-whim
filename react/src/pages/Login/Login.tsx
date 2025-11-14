@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import api from "../../api";
 
-const LoginPage = () => {
+const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -94,4 +94,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

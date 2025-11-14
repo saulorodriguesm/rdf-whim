@@ -5,7 +5,7 @@ import "../Login/Login.css";
 import "./Register.css";
 import api from "../../api";
 
-const RegisterPage = () => {
+const Cadastro = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>("");
@@ -200,4 +200,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default Cadastro;

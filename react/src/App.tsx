@@ -6,9 +6,9 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import LoginPage from "./pages/Login/Login";
-import RegisterPage from "./pages/Register/Register";
-import QuestionarioPage from "./pages/Survey/QuestionarioPage";
+import Login from "./pages/Login/Login";
+import Cadastro from "./pages/Cadastro/Cadastro";
+import Questionario from "./pages/Questionario/Questionario";
 
 import Header from "./components/Header/Header";
 const isAuthenticated = () => !!localStorage.getItem("token");
@@ -45,7 +45,7 @@ const App: React.FC = () => {
           path="/login"
           element={
             <PublicRoute>
-              <LoginPage />
+              <Login />
             </PublicRoute>
           }
         />
@@ -54,7 +54,7 @@ const App: React.FC = () => {
           path="/cadastro"
           element={
             <PublicRoute>
-              <RegisterPage />
+              <Cadastro />
             </PublicRoute>
           }
         />
@@ -63,7 +63,7 @@ const App: React.FC = () => {
           path="/questionario"
           element={
             <PrivateRoute>
-              <QuestionarioPage />
+              <Questionario />
             </PrivateRoute>
           }
         />
