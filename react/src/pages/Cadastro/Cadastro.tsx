@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../Login/Login.css";
-import "./Register.css";
+import "./Cadastro.css";
 import api from "../../api";
 
 const Cadastro = () => {
